@@ -3,6 +3,27 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
+def girdi_al(mesaj, min_deger=1, max_deger=10):
+    while True:
+        try:
+            deger = int(input(mesaj))
+            if min_deger <= deger <= max_deger:
+                return deger
+            else:
+                print(f"Lütfen {min_deger}-{max_deger} arasında bir değer girin.")
+        except ValueError:
+            print("Sadece sayı giriniz.")
+
+def cinsiyet_al():
+    while True:
+        giris = input("Cinsiyet (erkek/kadın ya da 0/1): ").strip().lower()
+        if giris in ["erkek", "0"]:
+            return 0
+        elif giris in ["kadın", "1", "kadin"]:
+            return 1
+        else:
+            print("Geçerli bir cinsiyet girin (erkek/kadın ya da 0/1)")
+
 def main():
     # 1) CSV dosyasını oku
     df = pd.read_csv("Python_Veriler_400_ortalamasiz.csv", encoding="utf-8")
@@ -13,7 +34,7 @@ def main():
             df["Cinsiyet"]
               .str.strip()
               .str.lower()
-              .map({"erkek": 0, "kadın": 1})
+              .map({"erkek": 0, "kadın": 1, "kadin": 1})
         )
 
     # 3) Eksik verileri temizle
@@ -40,18 +61,17 @@ def main():
 
     # 8) Kullanıcıdan veri al ve tahmin yap
     print("\nLütfen aşağıdaki bilgileri girin:")
-    yas = int(input("Yaş: "))
-    cinsiyet = input("Cinsiyet (erkek/kadın): ").strip().lower()
-    cinsiyet = 0 if cinsiyet == "erkek" else 1
-    hizmet = int(input("Hizmet Kalitesi (1-10): "))
-    bekleme = int(input("Bekleme Süresi (1-10): "))
-    temizlik = int(input("Temizlik (1-10): "))
-    menu = int(input("Menü Çeşitliliği (1-10): "))
-    lezzet = int(input("Lezzet Kalitesi (1-10): "))
-    fiyat = int(input("Fiyat Uygunluğu (1-10): "))
+    yas = girdi_al("Yaş (18-65): ", min_deger=18, max_deger=65)
+    cinsiyet = cinsiyet_al()
+    hizmet = girdi_al("Hizmet Kalitesi (1-10): ")
+    bekleme = girdi_al("Bekleme Süresi (1-10): ")
+    temizlik = girdi_al("Temizlik (1-10): ")
+    menu = girdi_al("Menü Çeşitliliği (1-10): ")
+    lezzet = girdi_al("Lezzet Kalitesi (1-10): ")
+    fiyat = girdi_al("Fiyat Uygunluğu (1-10): ")
 
     yeni_veri = pd.DataFrame([[yas, cinsiyet, hizmet, bekleme, temizlik, menu, lezzet, fiyat]],
-                              columns=özellikler)
+                             columns=özellikler)
 
     tahmin = model.predict(yeni_veri)[0]
     print("\nTahmin:", "Memnun kalır 👍" if tahmin == 1 else "Memnun kalmaz 👎")
