@@ -76,5 +76,25 @@ def main():
     tahmin = model.predict(yeni_veri)[0]
     print("\nTahmin:", "Memnun kalır 👍" if tahmin == 1 else "Memnun kalmaz 👎")
 
+    # 9) En yüksek ve en düşük puanı bul
+    puanlar = {
+        "Hizmet Kalitesi": hizmet,
+        "Bekleme Süresi": bekleme,
+        "Temizlik": temizlik,
+        "Menü Çeşitliliği": menu,
+        "Lezzet Kalitesi": lezzet,
+        "Fiyat Uygunluğu": fiyat
+    }
+
+    en_memnun = max(puanlar, key=puanlar.get)
+    en_memnun_deg = puanlar[en_memnun]
+
+    en_memnun_degil = min(puanlar, key=puanlar.get)
+    en_memnun_degil_deg = puanlar[en_memnun_degil]
+
+    print(f"\n💚 En memnun olduğu kısım: {en_memnun} ({en_memnun_deg}/10)")
+    print(f"💔 En az memnun olduğu kısım: {en_memnun_degil} ({en_memnun_degil_deg}/10)")
+
+
 if __name__ == "__main__":
     main()
