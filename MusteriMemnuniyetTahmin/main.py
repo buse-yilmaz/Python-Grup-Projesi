@@ -3,7 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
-# --- VERİYİ OKU VE MODELİ EĞİT ---
+
 df = pd.read_csv("Python_Veriler_400_ortalamasiz.csv")
 X = df.drop("Memnuniyet", axis=1)
 y = df["Memnuniyet"]
@@ -12,11 +12,11 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
-# --- DOĞRULUK ORANI ---
+
 y_pred = model.predict(X_test)
 print(f"Model Doğruluk Oranı: %{accuracy_score(y_test, y_pred) * 100:.2f}")
 
-# --- TAHMİN DÖNGÜSÜ ---
+
 print("\nYeni müşteri verilerini girin. Çıkmak için 'q' yazın.\n")
 
 while True:
@@ -68,10 +68,31 @@ while True:
                              columns=X.columns)  # modelin eğitimde kullandığı sütun adları
         tahmin = model.predict(girdi)[0]
 
+        girdi = pd.DataFrame([[yas, cinsiyet, hizmet, bekleme, temizlik, menu, lezzet, fiyat]],
+                             columns=X.columns)
+        tahmin = model.predict(girdi)[0]
+
         if tahmin == 1:
-            print("\n MUSTERU MEMNUN\n")
+            print("\n MUSTERI MEMNUN\n")
         else:
-            print("\n MUSTERI MEMNUN DEGIL.\n")
+            print("\n MUSTERI MEMNUN DEGIL\n")
+
+        # Puanlara göre analiz
+        kriterler = {
+            "Hizmet Kalitesi": hizmet,
+            "Bekleme Süresi": bekleme,
+            "Temizlik": temizlik,
+            "Menü Çeşitliliği": menu,
+            "Lezzet Kalitesi": lezzet,
+            "Fiyat": fiyat
+        }
+
+        en_memnun = max(kriterler, key=kriterler.get)
+        en_az_memnun = min(kriterler, key=kriterler.get)
+
+        print(f"🔹 Müşterinin en memnun olduğu alan: {en_memnun} ({kriterler[en_memnun]})")
+        print(f"🔹 Müşterinin en az memnun olduğu alan: {en_az_memnun} ({kriterler[en_az_memnun]})\n")
+
 
     except Exception as e:
         print("Hata:", e)
