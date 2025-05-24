@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Memnuniyet Paneli</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Müşteri Memnuniyet Paneli</h2>
+        <a href="/cikis" class="btn btn-outline-danger">Çıkış Yap</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped bg-white shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Yaş</th>
+                    <th>Cinsiyet</th>
+                    <th>Hizmet</th>
+                    <th>Bekleme</th>
+                    <th>Temizlik</th>
+                    <th>Menü</th>
+                    <th>Lezzet</th>
+                    <th>Fiyat</th>
+                    <th>Tahmin</th>
+                    <th>En Memnun Alan</th>
+                    <th>En Az Memnun Alan</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in veriler %}
+                <tr>
+                    <td>{{ v['Yaş'] }}</td>
+                    <td>{{ 'Kadın' if v['Cinsiyet'] == 0 else 'Erkek' }}</td>
+                    <td>{{ v['Hizmet Kalitesi'] }}</td>
+                    <td>{{ v['Bekleme Süresi'] }}</td>
+                    <td>{{ v['Temizlik'] }}</td>
+                    <td>{{ v['Menü Çeşitliliği'] }}</td>
+                    <td>{{ v['Lezzet Kalitesi'] }}</td>
+                    <td>{{ v['Fiyat'] }}</td>
+                    <td><span class="badge {% if v['Tahmin'] == 'MEMNUN' %}bg-success{% else %}bg-danger{% endif %}">{{ v['Tahmin'] }}</span></td>
+                    <td>{{ v['En Memnun Alan'] }}</td>
+                    <td>{{ v['En Az Memnun Alan'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
