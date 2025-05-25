@@ -18,6 +18,7 @@ def index():
 @app.route("/tahmin", methods=["POST"])
 def tahmin_et():
     try:
+        masa_no = int(request.form['masa_no'])
         yas = int(request.form["yas"])
         cinsiyet = int(request.form["cinsiyet"])
         hizmet = int(request.form["hizmet"])
@@ -47,6 +48,7 @@ def tahmin_et():
 
         # Veriyi kaydet
         veri_kayitlari.append({
+            "Masa No": masa_no,
             "Yaş": yas,
             "Cinsiyet": cinsiyet,
             "Hizmet Kalitesi": hizmet,
