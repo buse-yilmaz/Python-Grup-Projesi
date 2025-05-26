@@ -79,6 +79,13 @@ def login():
 
         if kullanici == "sevim" and sifre == "4141":
             return redirect("/panel")
+        elif kullanici == "semanur" and sifre == "5361":
+            return redirect("/panel")
+        elif kullanici == "buse" and sifre == "3535":
+            return redirect("/panel")
+        elif kullanici == "neslihan" and sifre == "4345":
+            return redirect("/panel")
+
         else:
             return render_template("login.html", hata="❌ Geçersiz kullanıcı adı veya şifre.")
     return render_template("login.html")
