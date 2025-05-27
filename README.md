@@ -37,5 +37,5 @@ Bu proje sayesinde ekip üyeleri farklı makine öğrenmesi algoritmalarını pr
 
 * **Semanur Erdoğan** - 032390064
 * **Sevim Çıra** - 032390053
-* **Neslihan Özdemir** - 0323900
+* **Neslihan Özdemir** - 032390069
 * **Buse Yılmaz** - 032390024
