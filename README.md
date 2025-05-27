@@ -23,7 +23,7 @@ Her model kendi içinde değerlendirilmiş, doğruluk skorlarına göre karşıl
 
 ### 4. Model Seçimi ve Gerekçe
 
-SVM modeli doğruluk açısından başarılı sonuçlar vermiş olsa da, Logistic Regression modeli; daha yorumlanabilir olması, daha hızlı çalışması ve genelleme yeteneği açısından avantajlı bulunmuştur. Bu nedenle son kullanıcıya sunulan arayüzde Logistic Regression kullanılmıştır.
+ Logistic Regression modeli; daha yorumlanabilir olması, daha hızlı çalışması ve genelleme yeteneği açısından avantajlı bulunmuştur. Bu nedenle son kullanıcıya sunulan arayüzde Logistic Regression kullanılmıştır.
 
 ### 5. Arayüz ve Kullanım
 
