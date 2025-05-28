@@ -1,30 +1,28 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score
 
-# 1. Veriyi oku
+
 df = pd.read_csv("Python_Veriler_400_ortalamasiz.csv")
 
-# 2. Giriş (X) ve hedef (y) değişkenlerini ayır
+
 X = df[['Yaş', 'Cinsiyet', 'Hizmet Kalitesi', 'Bekleme Süresi', 'Temizlik',
         'Menü Çeşitliliği', 'Lezzet Kalitesi', 'Fiyat']]
 y = df['Memnuniyet']
 
-# 3. Veriyi eğitim ve test setine ayır
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# 4. Naive Bayes modelini oluştur ve eğit
 model = GaussianNB()
 model.fit(X_train, y_train)
 
-# 5. Model performansını yazdır
+
 y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Model doğruluğu: %{accuracy * 100:.2f}")
-print(classification_report(y_test, y_pred))
 
-# 6. Yeni müşteri bilgisi al
+
 def input_int(prompt):
     while True:
         try:
@@ -80,16 +78,35 @@ while True:
         break
     print("1 ile 10 arasında bir değer girin.")
 
-# 7. Tahmin yap
+
 new_data = pd.DataFrame([[yas, cinsiyet, hizmet, bekleme, temizlik, menu, lezzet, fiyat]],
                         columns=['Yaş', 'Cinsiyet', 'Hizmet Kalitesi', 'Bekleme Süresi',
                                  'Temizlik', 'Menü Çeşitliliği', 'Lezzet Kalitesi', 'Fiyat'])
 
 predicted_class = model.predict(new_data)[0]
-predicted_proba = model.predict_proba(new_data)[0]
 
-# 8. Sonucu göster
+alanlar = ['Hizmet Kalitesi', 'Bekleme Süresi', 'Temizlik',
+           'Menü Çeşitliliği', 'Lezzet Kalitesi', 'Fiyat']
+
+puanlar = [hizmet, bekleme, temizlik, menu, lezzet, fiyat]
+alan_puan = dict(zip(alanlar, puanlar))
+
+en_memnun_alan = max(alan_puan, key=alan_puan.get)
+en_memnun_puan = alan_puan[en_memnun_alan]
+
+en_memnun_deg_alan = min(alan_puan, key=alan_puan.get)
+en_memnun_deg_puan = alan_puan[en_memnun_deg_alan]
+
+
 if predicted_class == 1:
-    print(f"\nMüşteri büyük ihtimalle MEMNUN kalacak. (%{predicted_proba[1]*100:.2f} olasılık)")
+    print(f"\nMüşteri Memnun")
 else:
-    print(f"\nMüşteri büyük ihtimalle MEMNUN KALMAYACAK. (%{predicted_proba[0]*100:.2f} olasılık)")
+    print(f"\nMüşteri Memnun Değil")
+
+print(f"En memnun kalınan alan: {en_memnun_alan} ({en_memnun_puan}/10)")
+print(f"En memnun kalmadığı alan: {en_memnun_deg_alan} ({en_memnun_deg_puan}/10)")
+
+
+
+
+
